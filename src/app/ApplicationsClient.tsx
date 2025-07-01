@@ -2,7 +2,6 @@
 
 import { useFilterSort } from "@/lib/useFilterSort";
 import  StudentFilters  from "@/components/StudentFilters";
-import { ModeToggle } from "@/components/ModeToggle";
 import { ApplicationDataTable } from "@/components/ApplicationDataTable";
 import { Card, CardContent } from "@/components/ui/card";
 import { FileText, Globe, Users, GraduationCap } from "lucide-react";
@@ -14,12 +13,9 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 export default function ApplicationsClient({ apps }:{apps:Application[]}) {
   const {
     filters,
-    sortField,
-    sortDirection,
     filteredAndSortedData,
     updateFilter,
     clearFilters,
-    updateSort,
     uniqueStatuses,
     uniqueApplicationCategories,
     uniqueSchoolZones,
@@ -42,7 +38,7 @@ export default function ApplicationsClient({ apps }:{apps:Application[]}) {
                 Ministry of Higher Education & Scientific Research - Student Data Portal
               </p>
             </div>
-            <ModeToggle />
+            <ThemeSwitcher />
           </div>
         </div>
 

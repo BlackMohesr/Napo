@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import {
   ColumnDef,
   flexRender,
@@ -14,9 +13,8 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -27,6 +25,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Application } from "@/types/applications";
+import { useMemo, useState } from "react";
 
 interface Props {
   data: Application[];
@@ -34,13 +33,13 @@ interface Props {
 
 export function ApplicationDataTable({ data }: Props) {
   const router = useRouter();
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
 
   // Add a virtual 'search' field to each row
-  const dataWithSearch = React.useMemo(() =>
+  const dataWithSearch = useMemo(() =>
     data.map((row) => ({
       ...row,
       search: `${row["Name English"] ?? ""} ${row["Application Id"] ?? ""}`,
@@ -48,7 +47,7 @@ export function ApplicationDataTable({ data }: Props) {
     [data]
   );
 
-  const columns = React.useMemo<ColumnDef<Application & { search: string }>[]>(
+  const columns = useMemo<ColumnDef<Application & { search: string }>[]>(
     () => [
       {
         accessorKey: "Application Id",
@@ -126,10 +125,8 @@ export function ApplicationDataTable({ data }: Props) {
   });
 
   // Unified search only on the 'search' column
-  const searchValue = (table.getColumn("search")?.getFilterValue() as string) ?? "";
 
   // Pagination info
-  const totalApplications = data.length;
   const totalFiltered = table.getFilteredRowModel().rows.length;
   //const pageSize = table.getState().pagination?.pageSize || 10;
   const pageSize = 20;

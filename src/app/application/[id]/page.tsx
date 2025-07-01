@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@radix-ui/react-context-menu";
-import { ArrowLeft, User, Calendar, Users, Globe, Mail, Phone, MapPin, BookOpen, School, GraduationCap, Award, FileText, Eye, Download } from "lucide-react";
+import { ArrowLeft, User, Calendar, Users, Globe, Mail, Phone, MapPin, BookOpen, School, GraduationCap, Award, FileText } from "lucide-react";
 import { Suspense } from "react";
 import { fetchApplicantById } from "@/lib/api";
 import Link from "next/link";
@@ -486,9 +486,11 @@ export default async function StudentDetailsPage({ params }: PageProps) {
                               <p>Your browser doesn't support PDFs. Please download the PDF to view it: <a href={doc.downloadURL} >Download PDF</a>.</p>
                             </object>
                           ) : (
-                          <img
+                          <Image
                             src={doc.downloadURL}
                             alt={doc.fileName}
+                            width={100}
+                            height={600}
                               className="w-full h-full object-cover"
                             />
                           )}
