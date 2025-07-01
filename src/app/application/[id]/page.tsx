@@ -12,11 +12,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 
 interface PageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function StudentDetailsPage({ params }: PageProps) {
-  const { id } = params;
+  const  id  = (await params).id;
   const student = await fetchApplicantById(id);
   // Find the photo from uploaded documents
   const photoDocument = student?.OnlineUploadedDocuments?.find(doc => doc.fileName === "Photo");
