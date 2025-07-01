@@ -16,7 +16,7 @@ interface PageProps {
 }
 
 export default async function StudentDetailsPage({ params }: PageProps) {
-  const { id } = await params;
+  const { id } = params;
   const student = await fetchApplicantById(id);
   // Find the photo from uploaded documents
   const photoDocument = student?.OnlineUploadedDocuments?.find(doc => doc.fileName === "Photo");
@@ -483,7 +483,7 @@ export default async function StudentDetailsPage({ params }: PageProps) {
                         <div className="aspect-video rounded-lg overflow-hidden bg-muted/30">
                           {doc.downloadURL.endsWith(".pdf") ? (
                             <object data={doc.downloadURL} width="100%" height="600px" type="application/pdf">
-                              <p>Your browser doesn't support PDFs. Please download the PDF to view it: <a href={doc.downloadURL} >Download PDF</a>.</p>
+                              <p>Your browser does not support PDFs. Please download the PDF to view it: <a href={doc.downloadURL} >Download PDF</a>.</p>
                             </object>
                           ) : (
                           <Image
