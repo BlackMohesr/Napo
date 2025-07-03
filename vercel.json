@@ -1,0 +1,13 @@
+{
+  "buildCommand": "pnpm run build",
+  "installCommand": "pnpm install",
+  "framework": "nextjs",
+  "functions": {
+    "app/page.tsx": {
+      "maxDuration": 30
+    },
+    "app/application/[id]/page.tsx": {
+      "maxDuration": 30
+    }
+  }
+} 

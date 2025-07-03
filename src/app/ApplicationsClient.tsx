@@ -24,6 +24,39 @@ export default function ApplicationsClient({ apps }:{apps:Application[]}) {
     uniqueStudyPrograms
   } = useFilterSort(apps || []);
 
+  // Show loading state if no apps are loaded
+  if (!apps || apps.length === 0) {
+    return (
+      <div className="container mx-auto py-8">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="mb-8">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-4xl font-bold text-foreground mb-2 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+                  NAPO Student Applications Dashboard
+                </h1>
+                <p className="text-muted-foreground text-lg">
+                  Ministry of Higher Education & Scientific Research - Student Data Portal
+                </p>
+              </div>
+              <ThemeSwitcher />
+            </div>
+          </div>
+
+          {/* Loading State */}
+          <div className="text-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+            <h2 className="text-xl font-semibold text-foreground mb-2">Loading Applications</h2>
+            <p className="text-muted-foreground">
+              Please wait while we fetch the latest student application data...
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto py-8 ">
       <div className="max-w-7xl mx-auto">

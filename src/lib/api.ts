@@ -16,7 +16,8 @@ export async function loadApplications(): Promise<Application[]> {
     }
 
     const res = await fetch(API_URL, { 
-      cache: "no-store" // Disable Next.js caching due to large response size
+      cache: "no-store", // Disable Next.js caching due to large response size
+      next: { revalidate: 0 } // Ensure dynamic behavior
     });
     
     if (!res.ok) {
