@@ -69,8 +69,7 @@ export default function StudentFilters({
     <Card className="bg-card backdrop-blur-md border-border mb-6">
       <CardHeader>
         <CardTitle>
-          {" "}
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-2">
             <Filter className="h-5 w-5 text-muted-foreground" />
             <h3 className="text-foreground font-semibold">Filters & Search</h3>
             <Button
@@ -87,16 +86,6 @@ export default function StudentFilters({
       </CardHeader>
       <CardContent className="p-2">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search students..."
-              value={searchValue}
-              onChange={(e) => onSearchChange(e.target.value)}
-              className="pl-10 bg-muted/10 border-border text-foreground placeholder:text-muted-foreground"
-            />
-          </div>
-
           {/* Application Numbers Filter */}
           <div className="relative col-span-full">
             <textarea
@@ -104,6 +93,17 @@ export default function StudentFilters({
               value={applicationNumbersValue}
               onChange={(e) => onApplicationNumbersChange(e.target.value)}
               className="w-full min-h-[60px] max-h-32 resize-y bg-muted/10 border border-border rounded-md p-2 text-foreground placeholder:text-muted-foreground text-sm"
+            />
+          </div>
+
+          {/* Application Numbers Filter */}
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search students..."
+              value={searchValue}
+              onChange={(e) => onSearchChange(e.target.value)}
+              className="pl-10 bg-muted/10 border-border text-foreground placeholder:text-muted-foreground"
             />
           </div>
 

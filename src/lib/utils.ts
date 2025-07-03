@@ -65,6 +65,7 @@ export function encodeApplicationData(app: Application): string {
       "University Offer Letter": app["University Offer Letter"],
       "Approval Status Remarks": app["Approval Status Remarks"],
       "OnlineUploadedDocuments": app["OnlineUploadedDocuments"],
+      "DocumentsZip": app["DocumentsZip"],
     };
     
     return encodeURIComponent(JSON.stringify(minimalData));
@@ -158,7 +159,7 @@ export function exportToCSV(data: Application[], filename: string = 'application
     // Create and download the file
     const csvContentWithBOM = '\uFEFF' + csvContent;
     const blob = new Blob([csvContentWithBOM], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement('a');
+    const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
     link.setAttribute('download', filename);

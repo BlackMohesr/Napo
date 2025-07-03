@@ -29,6 +29,7 @@ import { notFound } from "next/navigation";
 import { Application } from "@/types/applications";
 import { decodeApplicationData, downloadZipFile } from "@/lib/utils";
 import PdfViewer from "@/components/PdfViewer";
+import DownloadZipButton from "@/components/DownloadZipButton";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -102,7 +103,7 @@ async function StudentDetailsContent({ id, searchParams }: { id: string; searchP
       (doc) => doc.fileName === "Photo"
     );
     const photoUrl = photoDocument?.downloadURL;
-
+    console.log("URL: ", student?.DocumentsZip);
     return (
       <div className="min-h-screen p-4">
         <div className="max-w-7xl mx-auto">
@@ -754,20 +755,9 @@ async function StudentDetailsContent({ id, searchParams }: { id: string; searchP
                       Uploaded Documents (
                       {student?.OnlineUploadedDocuments?.length || 0})
                     </CardTitle>
-                    {student?.["DocumentsZip"] && (
-                      <Button
-                        onClick={() => downloadZipFile(
-                          student["DocumentsZip"], 
-                          `${student["Name English"] || `Student_${student["Application Id"]}`}_documents.zip`
-                        )}
-                        variant="outline"
-                        size="sm"
-                        className="bg-blue-600 hover:bg-blue-700 text-white border-blue-600"
-                      >
-                        <Download className="h-4 w-4 mr-2" />
-                        Download All (ZIP)
-                      </Button>
-                    )}
+                    <DownloadZipButton
+                      zipUrl={student?.["DocumentsZip"] || ""}
+                    />
                   </div>
                 </CardHeader>
                 <CardContent>

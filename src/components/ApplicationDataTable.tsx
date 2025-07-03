@@ -180,14 +180,11 @@ export function ApplicationDataTable({ data }: Props) {
                       hasApprovedDoc ? "bg-green-100 dark:bg-green-900/30" : "hover:bg-muted"
                     }`}
                     onClick={() => {
-                      // Pass the application data as URL parameter for instant navigation
                       const encodedData = encodeApplicationData(app);
-                      if (encodedData) {
-                        router.push(`/application/${app["Application Id"]}?data=${encodedData}`, { scroll: false });
-                      } else {
-                        // Fallback to regular navigation if encoding fails
-                        router.push(`/application/${app["Application Id"]}`, { scroll: false });
-                      }
+                      const url = encodedData
+                        ? `/application/${app["Application Id"]}?data=${encodedData}`
+                        : `/application/${app["Application Id"]}`;
+                      window.open(url, "_blank", "noopener,noreferrer");
                     }}
                   >
                     {row.getVisibleCells()
