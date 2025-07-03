@@ -175,11 +175,10 @@ export function exportToCSV(data: Application[], filename: string = 'application
 }
 
 // Simple download function for existing zip files
-export function downloadZipFile(zipUrl: string, filename: string = 'documents.zip') {
+export function downloadZipFile(zipUrl: string) {
   try {
     const link = document.createElement('a');
     link.setAttribute('href', zipUrl);
-    link.setAttribute('download', filename);
     link.setAttribute('target', '_blank');
     link.style.visibility = 'hidden';
     document.body.appendChild(link);
