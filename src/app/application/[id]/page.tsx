@@ -17,7 +17,6 @@ import {
   Award,
   FileText,
   Loader2,
-  Download,
 } from "lucide-react";
 import { Suspense } from "react";
 import { fetchApplicantById } from "@/lib/api";
@@ -27,7 +26,7 @@ import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { notFound } from "next/navigation";
 import { Application } from "@/types/applications";
-import { decodeApplicationData, downloadZipFile } from "@/lib/utils";
+import { decodeApplicationData } from "@/lib/utils";
 import PdfViewer from "@/components/PdfViewer";
 import DownloadZipButton from "@/components/DownloadZipButton";
 
