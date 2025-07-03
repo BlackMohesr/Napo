@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { encodeApplicationData } from "@/lib/utils";
 import {
   Table,
   TableBody,
@@ -178,7 +179,16 @@ export function ApplicationDataTable({ data }: Props) {
                     className={`cursor-pointer transition-colors ${
                       hasApprovedDoc ? "bg-green-100 dark:bg-green-900/30" : "hover:bg-muted"
                     }`}
-                    onClick={() => router.push(`/application/${app["Application Id"]}`, { scroll: false })}
+                    onClick={() => {
+                      // Pass the application data as URL parameter for instant navigation
+                      const encodedData = encodeApplicationData(app);
+                      if (encodedData) {
+                        router.push(`/application/${app["Application Id"]}?data=${encodedData}`, { scroll: false });
+                      } else {
+                        // Fallback to regular navigation if encoding fails
+                        router.push(`/application/${app["Application Id"]}`, { scroll: false });
+                      }
+                    }}
                   >
                     {row.getVisibleCells()
                       .filter((cell) => cell.column.id !== "search")
