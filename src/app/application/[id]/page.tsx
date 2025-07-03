@@ -17,6 +17,7 @@ import {
   Award,
   FileText,
   Loader2,
+  Download,
 } from "lucide-react";
 import { Suspense } from "react";
 import { fetchApplicantById } from "@/lib/api";
@@ -26,7 +27,7 @@ import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { notFound } from "next/navigation";
 import { Application } from "@/types/applications";
-import { decodeApplicationData } from "@/lib/utils";
+import { decodeApplicationData, downloadZipFile } from "@/lib/utils";
 import PdfViewer from "@/components/PdfViewer";
 
 interface PageProps {
@@ -747,11 +748,27 @@ async function StudentDetailsContent({ id, searchParams }: { id: string; searchP
               {/* Documents */}
               <Card className="bg-card/20 backdrop-blur-md border-border">
                 <CardHeader>
-                  <CardTitle className="text-foreground flex items-center gap-2">
-                    <FileText className="h-5 w-5" />
-                    Uploaded Documents (
-                    {student?.OnlineUploadedDocuments?.length || 0})
-                  </CardTitle>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-foreground flex items-center gap-2">
+                      <FileText className="h-5 w-5" />
+                      Uploaded Documents (
+                      {student?.OnlineUploadedDocuments?.length || 0})
+                    </CardTitle>
+                    {student?.["DocumentsZip"] && (
+                      <Button
+                        onClick={() => downloadZipFile(
+                          student["DocumentsZip"], 
+                          `${student["Name English"] || `Student_${student["Application Id"]}`}_documents.zip`
+                        )}
+                        variant="outline"
+                        size="sm"
+                        className="bg-blue-600 hover:bg-blue-700 text-white border-blue-600"
+                      >
+                        <Download className="h-4 w-4 mr-2" />
+                        Download All (ZIP)
+                      </Button>
+                    )}
+                  </div>
                 </CardHeader>
                 <CardContent>
                   {student?.OnlineUploadedDocuments?.length &&

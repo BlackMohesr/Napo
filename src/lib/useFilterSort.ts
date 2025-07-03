@@ -16,7 +16,7 @@ interface FilterState {
   hasUniversityApprovedDoc: string; // '' | 'With Offer' | 'Without Offer'
 }
 
-export const useFilterSort = (data: Application[]) => {
+export const useFilterSort = (data: Application[], applicationNumbers?: string) => {
   const [filters, setFilters] = useState<FilterState>({
     search: '',
     status: '',
@@ -33,6 +33,17 @@ export const useFilterSort = (data: Application[]) => {
   
   const filteredAndSortedData = useMemo(() => {
     let result = [...data];
+    
+    // Application numbers filter
+    if (applicationNumbers && applicationNumbers.trim().length > 0) {
+      const appNumbersSet = new Set(
+        applicationNumbers
+          .split(/\r?\n/)
+          .map(line => line.trim())
+          .filter(Boolean)
+      );
+      result = result.filter(student => appNumbersSet.has(String(student["Application Id"])));
+    }
     
     // Apply filters
     if (filters.search) {
@@ -99,7 +110,7 @@ export const useFilterSort = (data: Application[]) => {
     });
     
     return result;
-  }, [data, filters, sortField, sortDirection]);
+  }, [data, filters, sortField, sortDirection, applicationNumbers]);
   
   const updateFilter = <K extends keyof FilterState>(key: K, value: FilterState[K]) => {
     setFilters(prev => ({ ...prev, [key]: value }));

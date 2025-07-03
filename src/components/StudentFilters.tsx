@@ -34,6 +34,8 @@ interface StudentFiltersProps {
   uniqueStudyPrograms: string[];
   hasUniversityApprovedDocValue: string;
   onHasUniversityApprovedDocChange: (value: string) => void;
+  onApplicationNumbersChange: (value: string) => void;
+  applicationNumbersValue: string;
 }
 
 export default function StudentFilters({
@@ -60,6 +62,8 @@ export default function StudentFilters({
   uniqueStudyPrograms,
   hasUniversityApprovedDocValue,
   onHasUniversityApprovedDocChange,
+  onApplicationNumbersChange,
+  applicationNumbersValue,
 }: StudentFiltersProps) {
   return (
     <Card className="bg-card backdrop-blur-md border-border mb-6">
@@ -90,6 +94,16 @@ export default function StudentFilters({
               value={searchValue}
               onChange={(e) => onSearchChange(e.target.value)}
               className="pl-10 bg-muted/10 border-border text-foreground placeholder:text-muted-foreground"
+            />
+          </div>
+
+          {/* Application Numbers Filter */}
+          <div className="relative col-span-full">
+            <textarea
+              placeholder="Paste application numbers (one per line)"
+              value={applicationNumbersValue}
+              onChange={(e) => onApplicationNumbersChange(e.target.value)}
+              className="w-full min-h-[60px] max-h-32 resize-y bg-muted/10 border border-border rounded-md p-2 text-foreground placeholder:text-muted-foreground text-sm"
             />
           </div>
 

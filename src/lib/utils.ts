@@ -90,3 +90,102 @@ export function decodeApplicationData(encodedData: string): Application | null {
     return null;
   }
 }
+
+// CSV Export functionality
+export function exportToCSV(data: Application[], filename: string = 'applications.csv') {
+  try {
+    // Define the columns to export
+    const columns = [
+      'Application Id',
+      'Name English',
+      'Name Arabic',
+      'Application Status',
+      'Birth Date',
+      'Gender English',
+      'Nationality Country English',
+      'Email',
+      'Mobile',
+      'Res Area English',
+      'High School Average',
+      'High School English',
+      'High School Maths',
+      'High School Physics',
+      'High School Chemistry',
+      'School Name English',
+      'School Zone',
+      'Study Type',
+      'Study Program',
+      'Institution Name English',
+      'Institution Campus English',
+      'Institution Major English - 1',
+      'Institution Program English - 1',
+      'Application Category',
+      'ITIMAD Status',
+      'ITIMAD Reference Number',
+      'ITIMAD Status Date',
+      'University Offer Letter',
+      'Documents Count'
+    ];
+
+    // Create CSV header
+    const csvHeader = columns.join(',');
+
+    // Create CSV rows
+    const csvRows = data.map(app => {
+      return columns.map(column => {
+        let value = app[column as keyof Application];
+        
+        // Handle special cases
+        if (column === 'Documents Count') {
+          value = app.OnlineUploadedDocuments?.length || 0;
+        }
+        
+        // Escape commas and quotes in the value
+        if (typeof value === 'string') {
+          value = value.replace(/"/g, '""'); // Escape quotes
+          if (value.includes(',') || value.includes('"') || value.includes('\n')) {
+            value = `"${value}"`; // Wrap in quotes if needed
+          }
+        }
+        
+        return value || '';
+      }).join(',');
+    });
+
+    // Combine header and rows
+    const csvContent = [csvHeader, ...csvRows].join('\n');
+
+    // Create and download the file
+    const csvContentWithBOM = '\uFEFF' + csvContent;
+    const blob = new Blob([csvContentWithBOM], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', filename);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error('Error exporting CSV:', error);
+    alert('Failed to export CSV. Please try again.');
+  }
+}
+
+// Simple download function for existing zip files
+export function downloadZipFile(zipUrl: string, filename: string = 'documents.zip') {
+  try {
+    const link = document.createElement('a');
+    link.setAttribute('href', zipUrl);
+    link.setAttribute('download', filename);
+    link.setAttribute('target', '_blank');
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (error) {
+    console.error('Error downloading zip file:', error);
+    alert('Failed to download zip file. Please try again.');
+  }
+}

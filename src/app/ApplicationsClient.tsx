@@ -4,13 +4,16 @@ import { useFilterSort } from "@/lib/useFilterSort";
 import  StudentFilters  from "@/components/StudentFilters";
 import { ApplicationDataTable } from "@/components/ApplicationDataTable";
 import { Card, CardContent } from "@/components/ui/card";
-import { FileText, Globe, Users, GraduationCap } from "lucide-react";
-import { Suspense } from "react";
+import { FileText, Globe, Users, GraduationCap, Download } from "lucide-react";
+import { Suspense, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Application } from "@/types/applications";
 import { ThemeSwitcher } from "@/components/theme-switcher";
+import { exportToCSV } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 export default function ApplicationsClient({ apps }:{apps:Application[]}) {
+  const [applicationNumbers, setApplicationNumbers] = useState("");
   const {
     filters,
     filteredAndSortedData,
@@ -22,7 +25,7 @@ export default function ApplicationsClient({ apps }:{apps:Application[]}) {
     uniqueSchoolNames,
     uniqueStudyTypes,
     uniqueStudyPrograms
-  } = useFilterSort(apps || []);
+  } = useFilterSort(apps || [], applicationNumbers);
 
   // Show loading state if no apps are loaded
   if (!apps || apps.length === 0) {
@@ -149,7 +152,23 @@ export default function ApplicationsClient({ apps }:{apps:Application[]}) {
           uniqueStudyPrograms={uniqueStudyPrograms}
           hasUniversityApprovedDocValue={filters.hasUniversityApprovedDoc}
           onHasUniversityApprovedDocChange={(value) => updateFilter('hasUniversityApprovedDoc', value)}
+          applicationNumbersValue={applicationNumbers}
+          onApplicationNumbersChange={setApplicationNumbers}
         />
+
+        {/* Export Button */}
+        <div className="flex justify-end mb-4">
+          <Button
+            onClick={() => {
+              const filename = `napo_applications_${new Date().toISOString().split('T')[0]}.csv`;
+              exportToCSV(filteredAndSortedData, filename);
+            }}
+            className="bg-green-600 hover:bg-green-700 text-white"
+          >
+            <Download className="h-4 w-4 mr-2" />
+            Export Filtered Data (CSV)
+          </Button>
+        </div>
         <Suspense fallback={<div className="space-y-4 p-6">
           {[...Array(5)].map((_, i) => (
             <div key={i} className="flex items-center space-x-4">
