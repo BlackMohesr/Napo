@@ -19,7 +19,7 @@ export default function NotFound() {
           </h1>
           
           <p className="text-muted-foreground mb-6">
-            The student application you're looking for doesn't exist or may have been removed.
+            The student application you&apos;re looking for doesn&apos;t exist or may have been removed.
           </p>
           
           <div className="space-y-3">

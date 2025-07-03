@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 
 interface PdfViewerProps {
   url: string;
-  fileName: string;
+  fileName?: string;
 }
 
-export default function PdfViewer({ url, fileName }: PdfViewerProps) {
+export default function PdfViewer({ url }: PdfViewerProps) {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function PdfViewer({ url, fileName }: PdfViewerProps) {
         <div className="flex items-center justify-center h-full p-4 text-center">
           <div>
             <p className="text-muted-foreground mb-2">
-              Your browser does not support PDFs.
+              Your browser does&apos;t support PDFs.
             </p>
             <a 
               href={url} 
