@@ -1,6 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Users, Globe, GraduationCap, FileText } from "lucide-react";
 
 export default function Loading() {
   return (
